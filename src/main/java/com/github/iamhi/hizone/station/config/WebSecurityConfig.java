@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +20,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     private static final String[] NOT_AUTHORIZE_PATHS = {
         "/actuator/**",
@@ -31,7 +30,9 @@ public class WebSecurityConfig {
         "/swagger-ui/**",
         "/swagger-ui.html",
         "/webjars/**",
-        "/v3/**"
+        "/v3/**",
+        "/user/signup",
+        "/token/**"
     };
 
     @Bean
@@ -45,7 +46,6 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
         http
-//            .securityContext(context -> context.requireExplicitSave(false)) // investigate what this does
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)

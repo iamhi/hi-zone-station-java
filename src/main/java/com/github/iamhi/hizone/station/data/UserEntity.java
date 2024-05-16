@@ -19,7 +19,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Table(name = "users")
 @Entity(name = "users")
-class UserEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

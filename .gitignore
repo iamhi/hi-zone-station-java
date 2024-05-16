@@ -34,3 +34,4 @@ build/
 
 application-database.properties
 application-authentication.properties
+user-roles.properties
