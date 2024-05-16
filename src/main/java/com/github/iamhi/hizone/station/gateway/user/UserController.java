@@ -32,7 +32,8 @@ public record UserController(
         return new UserResponse(
             userDto.uuid(),
             userDto.username(),
-            userDto.email());
+            userDto.email(),
+            userDto.roles());
     }
 
     @PostMapping("/role")
@@ -52,6 +53,7 @@ public record UserController(
         return new UserResponse(
             userDto.uuid(),
             userDto.username(),
-            userDto.email());
+            userDto.email(),
+            userDto.roles());
     }
 }
