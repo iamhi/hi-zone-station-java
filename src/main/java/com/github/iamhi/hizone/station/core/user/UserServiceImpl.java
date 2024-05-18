@@ -58,6 +58,13 @@ public record UserServiceImpl(
         return Optional.empty();
     }
 
+    @Override
+    public String getUserUuid(String username, String password) {
+        return userRepository.findByUsername(username)
+            .filter(userEntity -> bCryptPasswordEncoder.matches(password, userEntity.getPassword()))
+            .map(UserEntity::getUuid).orElse(StringUtils.EMPTY);
+    }
+
     private boolean validateRole(String role, String rolePassword) {
         return StringUtils.equals(userRoleConfig.getRoles().get(role), rolePassword);
     }

@@ -1,4 +1,4 @@
-package com.github.iamhi.hizone.station.config;
+package com.github.iamhi.hizone.station.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,14 +13,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-
-    private final UserDetailsService userDetailsService;
 
     private static final String[] NOT_AUTHORIZE_PATHS = {
         "/actuator/**",
@@ -34,6 +33,10 @@ public class WebSecurityConfig {
         "/user/signup",
         "/token/**"
     };
+
+    private final UserDetailsService userDetailsService;
+
+    private final AuthTokenAuthenticationFilter authTokenAuthenticationFilter;
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -57,6 +60,7 @@ public class WebSecurityConfig {
             )
             .userDetailsService(userDetailsService)
             .httpBasic(Customizer.withDefaults())
+            .addFilterBefore(authTokenAuthenticationFilter, BasicAuthenticationFilter.class)
             .formLogin(Customizer.withDefaults());
 
         return http.build();

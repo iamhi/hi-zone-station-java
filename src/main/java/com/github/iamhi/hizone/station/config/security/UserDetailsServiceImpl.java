@@ -1,5 +1,6 @@
-package com.github.iamhi.hizone.station.config;
+package com.github.iamhi.hizone.station.config.security;
 
+import com.github.iamhi.hizone.station.config.ExtendedUserDetails;
 import com.github.iamhi.hizone.station.data.UserEntity;
 import com.github.iamhi.hizone.station.data.UserRepository;
 import org.springframework.security.core.authority.AuthorityUtils;

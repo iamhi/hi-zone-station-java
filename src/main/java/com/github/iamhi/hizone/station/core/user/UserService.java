@@ -13,4 +13,6 @@ public interface UserService {
     Optional<UserDto> findUserByUuid(String uuid);
 
     Optional<UserDto> addRole(String role, String password);
+
+    String getUserUuid(String username, String password);
 }
