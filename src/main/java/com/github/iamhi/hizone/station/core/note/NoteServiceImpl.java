@@ -3,6 +3,7 @@ package com.github.iamhi.hizone.station.core.note;
 import com.github.iamhi.hizone.station.core.user.MemberCache;
 import com.github.iamhi.hizone.station.data.NoteEntity;
 import com.github.iamhi.hizone.station.data.NoteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -11,10 +12,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-record NoteServiceImpl(
-    NoteRepository noteRepository,
-    MemberCache memberCache
-) implements NoteService {
+@RequiredArgsConstructor
+class NoteServiceImpl implements NoteService {
+
+    private final NoteRepository noteRepository;
+
+    private final MemberCache memberCache;
 
     static NoteDto mapEntityToDto(NoteEntity noteEntity) {
         return new NoteDto(

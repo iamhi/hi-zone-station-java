@@ -4,6 +4,7 @@ import com.github.iamhi.hizone.station.config.ExtendedUserDetails;
 import com.github.iamhi.hizone.station.config.UserRoleConfig;
 import com.github.iamhi.hizone.station.data.UserEntity;
 import com.github.iamhi.hizone.station.data.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,14 +18,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public record UserServiceImpl(
-    UserRepository userRepository,
-    BCryptPasswordEncoder bCryptPasswordEncoder,
-    UserRoleConfig userRoleConfig
-) implements UserService {
+@RequiredArgsConstructor
+class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final UserRoleConfig userRoleConfig;
 
     @Override
-    public UserDto createUser(String username, String password, String email) {
+    public UserDto createUser(
+        String username, String password, String email) {
         UserEntity userEntity = generateEntity();
 
         userEntity.setUsername(username);

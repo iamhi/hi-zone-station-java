@@ -1,6 +1,7 @@
 package com.github.iamhi.hizone.station.core.token;
 
 import com.github.iamhi.hizone.station.core.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +10,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public record TokenServiceImpl(
-    UserService userService,
-    TokenStore tokenStore
-) implements TokenService {
+@RequiredArgsConstructor
+class TokenServiceImpl implements TokenService {
+
+    private final UserService userService;
+
+    private final TokenStore tokenStore;
 
     @Override
     public Optional<String> generateRefreshToken(String username, String password) {
