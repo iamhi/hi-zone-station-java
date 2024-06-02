@@ -15,7 +15,7 @@ public interface TokenService {
 
     Optional<String> generateAccessToken(@NotBlank String refreshToken);
 
-    Optional<TokenHolder> getAccessTokenHolder(@NotBlank String tokenUuid);
+    Optional<TokenHolder> getAccessTokenHolder(String tokenUuid);
 
     boolean isValid(@NotNull TokenHolder tokenHolder);
 
