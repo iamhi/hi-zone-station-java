@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>My Website</title>
+<!--        <link rel="stylesheet" href="./style.css">-->
+<!--        <link rel="icon" href="./favicon.ico" type="image/x-icon">-->
+    </head>
+    <body>
+        <main>
+            <h1>Weight log - index</h1>
+        </main>
+
+<!--        <script src="index.js"></script>-->
+        <section>
+            <form method="post" th:action="@{/wellbeing/weightlog}" enctype="multipart/form-data">
+                <label>
+                    Description:
+                    <input name="description" placeholder="current weight" type="text" />
+                </label>
+
+                <label>
+                    Upload image:
+                    <input type="file" name="image" accept="image/*" />
+                </label>
+                <input value="Submit" type="submit" />
+            </form>
+        </section>
+
+        <section>
+            <h2>Weight logs</h2>
+            <div th:each="log: ${weightLogs}">
+                <ul>
+                    <li class="align-middle"> <div th:text="${log.description}"></div></li>
+                    <li class="align-middle">
+                        <img th:src="${log.imageUrl}" />
+                    </li>
+                    <li class="align-middle" th:text="${log.createdAt}"></li>
+                </ul>
+            </div>
+        </section>
+    </body>
+</html>
