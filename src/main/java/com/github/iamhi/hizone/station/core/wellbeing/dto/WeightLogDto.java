@@ -6,6 +6,7 @@ public record WeightLogDto(
     String uuid,
     String ownerUuid,
     String description,
+    boolean hasImage,
     Instant createdAt,
     Instant updatedAt
 ) {

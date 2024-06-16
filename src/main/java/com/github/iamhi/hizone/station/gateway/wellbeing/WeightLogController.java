@@ -4,7 +4,6 @@ import com.github.iamhi.hizone.station.core.wellbeing.WeightLogService;
 import com.github.iamhi.hizone.station.core.wellbeing.dto.WeightLogDto;
 import com.github.iamhi.hizone.station.gateway.wellbeing.requests.CreateWeightLogRequest;
 import com.github.iamhi.hizone.station.gateway.wellbeing.responses.WeightLogResponse;
-import jdk.jfr.ContentType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +28,7 @@ public record WeightLogController(
         return new WeightLogResponse(
             dto.uuid(),
             dto.description(),
-            getImageUrl(dto.uuid()),
+            dto.hasImage() ? getImageUrl(dto.uuid()) : StringUtils.EMPTY,
             dto.createdAt(),
             dto.createdAt()
         );
@@ -47,6 +45,7 @@ public record WeightLogController(
             .toList();
     }
 
+    // TODO: Extract this to UI controller
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Optional<WeightLogResponse> addWeightLog(
         @ModelAttribute CreateWeightLogRequest request

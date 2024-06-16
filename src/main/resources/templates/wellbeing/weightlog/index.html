@@ -5,41 +5,55 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>My Website</title>
-<!--        <link rel="stylesheet" href="./style.css">-->
+        <link th:href="@{/styles/main.css}" rel="stylesheet" />
 <!--        <link rel="icon" href="./favicon.ico" type="image/x-icon">-->
     </head>
     <body>
         <main>
-            <h1>Weight log - index</h1>
+            <h1 class="weight-log__page-title">Weight log - index</h1>
+
+            <section class="weight-log__form-section">
+                <form
+                        class="weight-log__form"
+                        method="post"
+                        th:action="@{/wellbeing/weightlog}"
+                        enctype="multipart/form-data">
+                    <label class="weight-log__form__label">
+                        Description:
+                        <input
+                                class="weight-log__form__text-input"
+                                name="description"
+                                placeholder="current weight"
+                                type="text" />
+                    </label>
+
+                    <label class="weight-log__form__label">
+                        Upload image:
+                        <input
+                                class="weight-log__form__image-input"
+                                type="file"
+                                name="image"
+                                accept="image/*" />
+                    </label>
+                    <input
+                            class="weight-log__form__submit"
+                            value="Submit"
+                            type="submit" />
+                </form>
+            </section>
+
+            <section class="weight-log__log-list">
+                <h2 class="weight-log__list-title">Weight logs</h2>
+                <div class="weight-log__log-list__log" th:each="log: ${weightLogs}">
+                    <p class="weight-log__log-description" th:text="${log.description}"></p>
+                    <img
+                            class="weight-log__log-image"
+                            th:if="${!#strings.isEmpty(log.imageUrl)}"
+                            th:src="${log.imageUrl}" />
+                    <p th:text="${log.createdAt}"></p>
+                    <hr class="weight-log__log-separator" />
+                </div>
+            </section>
         </main>
-
-<!--        <script src="index.js"></script>-->
-        <section>
-            <form method="post" th:action="@{/wellbeing/weightlog}" enctype="multipart/form-data">
-                <label>
-                    Description:
-                    <input name="description" placeholder="current weight" type="text" />
-                </label>
-
-                <label>
-                    Upload image:
-                    <input type="file" name="image" accept="image/*" />
-                </label>
-                <input value="Submit" type="submit" />
-            </form>
-        </section>
-
-        <section>
-            <h2>Weight logs</h2>
-            <div th:each="log: ${weightLogs}">
-                <ul>
-                    <li class="align-middle"> <div th:text="${log.description}"></div></li>
-                    <li class="align-middle">
-                        <img th:src="${log.imageUrl}" />
-                    </li>
-                    <li class="align-middle" th:text="${log.createdAt}"></li>
-                </ul>
-            </div>
-        </section>
     </body>
 </html>

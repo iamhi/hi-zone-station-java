@@ -6,6 +6,7 @@ import com.github.iamhi.hizone.station.core.wellbeing.dto.WeightLogDto;
 import com.github.iamhi.hizone.station.data.wellbeing.WeightLogEntity;
 import com.github.iamhi.hizone.station.data.wellbeing.WeightLogRepository;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -34,7 +35,7 @@ public record WeightLogServiceImpl(
         weightLogEntity.setOwnerUuid(memberCache.getUuid());
         weightLogEntity.setDescription(description);
 
-        if (imageContent != null) {
+        if (imageContent != null && imageContent.length > 0) {
             String imagePath = fileService.writeFile(
                 FILE_PREFIX + UUID.randomUUID() + "." + fileExtension, APPLICATION_NAME,
                 true,
@@ -87,6 +88,7 @@ public record WeightLogServiceImpl(
             entity.getUuid(),
             entity.getOwnerUuid(),
             entity.getDescription(),
+            StringUtils.isNotBlank(entity.getImagePath()),
             entity.getCreatedAt(),
             entity.getUpdatedAt()
         );
